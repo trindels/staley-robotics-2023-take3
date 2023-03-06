@@ -28,7 +28,6 @@ def getDistanceTicksToMeters( ticks:float, ticksPerRotation:float, radius:float 
     meters:float = rotations * ( 2 * math.pi * radius )
     return meters
 
-
 def getDistanceMetersToTicks( meters:float, ticksPerRotation:float, radius:float ) -> float:
     rotations:float = meters / ( 2 * math.pi * radius )
     ticks:float = rotations * ticksPerRotation

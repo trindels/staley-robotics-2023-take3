@@ -3,17 +3,17 @@ import os
 from ntcore import *
 
 class Build:
-    ntInst = NetworkTableInstance.getDefault()
-    
     def buildInitConfig(self):
-        tbl = self.ntInst.getTable("InitConfig")
+        ntInst = NetworkTableInstance.getDefault()
+        tbl = ntInst.getTable("InitConfig")
         override:bool = tbl.getBoolean(".override", False)
         self.build(tbl, "build/config/", persist=True, override=override)
         tbl.putBoolean(".override", False)
         tbl.setPersistent(".override")
 
     def buildVariables(self):
-        tbl = self.ntInst.getTable("Variables")
+        ntInst = NetworkTableInstance.getDefault()
+        tbl = ntInst.getTable("Variables")
         override:bool = tbl.getBoolean(".override", False)
         self.build(tbl, "build/variables/", persist=True, override=override)
         tbl.putBoolean(".override", False)

@@ -1,4 +1,4 @@
-from ntcore import NetworkTableInstance, NetworkTable, NetworkTableEntry, Event, EventFlags
+from ntcore import NetworkTableInstance, NetworkTable, NetworkTableEntry, NetworkTableType, Event, EventFlags
 #from .arm import *
 #from .bumper import *
 #from .claw import *
@@ -25,6 +25,14 @@ class Subsystems:
         # Network Tables
         self.ntCfgs = self.ntInst.getTable(f"{initStr}")
         self.ntVars = self.ntInst.getTable(f"Variables/{cName}")
+
+
+        # Set Testing Variable
+        ntTest = self.ntInst.getTable(f".Testing")
+        eType = ntTest.getEntry(f"{cName}").getType()
+        if eType == NetworkTableType.kUnassigned:
+            ntTest.putBoolean(f"{cName}", False)
+            ntTest.setPersistent(f"{cName}")
 
         # Initialize Subsystem
         self.initSubsystem()

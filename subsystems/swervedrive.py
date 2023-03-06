@@ -1,5 +1,5 @@
 from . import Subsystems
-from .shared.functions import *
+from .__func__ import *
 from ctre import WPI_TalonFX, ControlMode, FeedbackDevice, RemoteFeedbackDevice, NeutralMode
 from ctre.sensors import WPI_Pigeon2, WPI_CANCoder, SensorInitializationStrategy, AbsoluteSensorRange
 from wpilib import SmartDashboard, XboxController
