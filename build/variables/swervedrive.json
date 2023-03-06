@@ -1,0 +1,83 @@
+{
+    "SwerveDrive4": {
+        "fieldRelative": true,
+        "speed": {
+            "angular": {
+                "maxVelocity": "2 * math.pi",
+                "maxAcceleration": "math.pi"
+            },
+            "linear": {
+                "maxVelocity": 2.0,
+                "maxVelocityX": 2.0,
+                "maxVelocityY": 2.0
+            }
+        },
+        "chassisControl": {
+            "x": {
+                "kP": 1.0,
+                "kI": 0.0,
+                "kD": 0.0,
+                "kS": 0.0,
+                "kV": 0.0,
+                "kA": 0.0,
+                "tolerance": 0.05
+            },
+            "y": {
+                "kP": 1.0,
+                "kI": 0.0,
+                "kD": 0.0,
+                "kS": 0.0,
+                "kV": 0.0,
+                "kA": 0.0,
+                "tolerance": 0.05
+            },
+            "omega": {
+                "kP": 1.0,
+                "kI": 0.0,
+                "kD": 0.0,
+                "kS": 0.0,
+                "kV": 0.0,
+                "kA": 0.0,
+                "tolerance": 0.05
+            }
+        }
+    },
+    "SwerveModule": {
+        "wheel": {
+            "radius": 0.05
+        },
+        "driveMotors": {
+            "ticks": 2048,
+            "gearRatio": 1,
+            "integratedPid": true,
+            "pidFf": {
+                "kP": 1.0,
+                "kI": 0.0,
+                "kD": 0.0,
+                "kF": 0.0,
+                "kS": 0.0,
+                "kV": 0.0,
+                "kA": 0.0,
+                "tolerance": 0.0
+            }
+        },
+        "angleMotors": {
+            "ticks": 2048,
+            "gearRatio": 10,
+            "integratedPid": true,
+            "pidFf": {
+                "kP": 0.05,
+                "kI": 0.0,
+                "kD": 0.0,
+                "kF": 0.0,
+                "kS": 0.0,
+                "kV": 0.0,
+                "kA": 0.0,
+                "tolerance": 0.0
+            }
+        },
+        "angleSensors": {
+            "ticks": 4096
+        }
+    }
+}

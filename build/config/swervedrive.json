@@ -1,0 +1,52 @@
+{
+    "SwerveDrive4": {
+        "gyroId": 9,
+        "gyroCanbus": "rio"
+    },
+    "SwerveModule": {
+        "FrontLeft": {
+            "driveMotorId": 7,
+            "driveMotorCanbus": "canivore1",
+            "angleMotorId": 8,
+            "angleMotorCanbus": "canivore1",
+            "angleSensorId": 18,
+            "angleSensorCanbus": "canivore1",
+            "angleSensorOffset": 137.4,
+            "modulePositionX": 0.25,
+            "modulePositionY": 0.25
+        },
+        "FrontRight": {
+            "driveMotorId": 5,
+            "driveMotorCanbus": "canivore1",
+            "angleMotorId": 6,
+            "angleMotorCanbus": "canivore1",
+            "angleSensorId": 16,
+            "angleSensorCanbus": "canivore1",
+            "angleSensorOffset": 137.4,
+            "modulePositionX": 0.25,
+            "modulePositionY": -0.25
+        },
+        "BackLeft": {
+            "driveMotorId": 3,
+            "driveMotorCanbus": "canivore1",
+            "angleMotorId": 4,
+            "angleMotorCanbus": "canivore1",
+            "angleSensorId": 14,
+            "angleSensorCanbus": "canivore1",
+            "angleSensorOffset": 137.4,
+            "modulePositionX": -0.25,
+            "modulePositionY": 0.25
+        },
+        "BackRight": {
+            "driveMotorId": 1,
+            "driveMotorCanbus": "canivore1",
+            "angleMotorId": 2,
+            "angleMotorCanbus": "canivore1",
+            "angleSensorId": 12,
+            "angleSensorCanbus": "canivore1",
+            "angleSensorOffset": 137.4,
+            "modulePositionX": -0.25,
+            "modulePositionY": -0.25
+        }
+    }
+}
