@@ -9,10 +9,6 @@ from wpimath.trajectory import TrapezoidProfile, TrapezoidProfileRadians
 from wpimath.kinematics import SwerveDrive4Kinematics, SwerveDrive4Odometry, SwerveModulePosition, SwerveModuleState, ChassisSpeeds
 from wpimath.geometry import Translation2d, Rotation2d, Pose2d
 
-class SwerveModulePID:
-    SoftwarePID = 0
-    IntegratedPID = 1
-
 class SwerveDrive4(Subsystems):
     cSpeeds:ChassisSpeeds = ChassisSpeeds()
     op1 = XboxController(0)

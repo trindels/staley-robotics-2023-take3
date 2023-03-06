@@ -12,7 +12,6 @@ class PhysicsEngine:
         self.physics_controller:PhysicsInterface = physics_controller
         self.drivetrain:SwerveDrive4 = robot.subsystems[0]
         self.gyroSim:BasePigeonSimCollection = self.drivetrain.gyro.getSimCollection()
-        pass
 
     def update_sim(self, now, tm_diff):
         if self.drivetrain is None:
@@ -20,8 +19,10 @@ class PhysicsEngine:
         elif self.drivetrain.cSpeeds is None:
             return
         
+        # Physics Controller Drivetrain Simulation
         cSpeeds:ChassisSpeeds = self.drivetrain.cSpeeds
         newPose:Pose2d = self.physics_controller.drive( cSpeeds, tm_diff )
+
+        # Gyro Simulation
         newRot:Rotation2d = newPose.rotation()
         self.gyroSim.setRawHeading( newRot.degrees() )
-        #pass

@@ -10,7 +10,7 @@
   {
     "name": "/InitConfig/SwerveDrive4/gyroCanbus",
     "type": "string",
-    "value": "canivore1",
+    "value": "rio",
     "properties": {
       "persistent": true
     }
@@ -322,7 +322,7 @@
   {
     "name": "/Variables/SwerveDrive4/fieldRelative",
     "type": "boolean",
-    "value": true,
+    "value": false,
     "properties": {
       "persistent": true
     }
@@ -730,7 +730,7 @@
   {
     "name": "/InitConfig/.override",
     "type": "boolean",
-    "value": true,
+    "value": false,
     "properties": {
       "persistent": true
     }

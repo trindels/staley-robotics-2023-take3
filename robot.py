@@ -5,11 +5,11 @@ from build import Build
 
 from subsystems import Subsystems
 from subsystems.swervedrive import SwerveDrive4
-from subsystems.pneumatics import RobotCompressor
-from subsystems.arm import Arm
-from subsystems.claw import Claw
-from subsystems.bumper import Bumper
-from subsystems.limelight import Limelight
+#from subsystems.pneumatics import RobotCompressor
+#from subsystems.arm import Arm
+#from subsystems.claw import Claw
+#from subsystems.bumper import Bumper
+#from subsystems.limelight import Limelight
 
 class Robot(TimedRobot):
     def robotInit(self): 
@@ -18,14 +18,38 @@ class Robot(TimedRobot):
         Build().buildVariables()
 
         # Build Subsystems
-        self.subsystems = [
-            SwerveDrive4(),
-            #RobotCompressor(),
-            #Arm(),
-            #Claw(),
-            #Bumper(),
-            #Limelight(),
-        ]
+        self.subsystems = []
+
+        # Add SwerveDrive to Subsystems
+        try:
+            self.subsystems.append( SwerveDrive4() )
+        except:
+            pass
+
+        try:
+            self.subsystems.append( RobotCompressor() )
+        except:
+            pass
+
+        try:
+            self.subsystems.append( Arm() )
+        except:
+            pass
+
+        try:
+            self.subsystems.append( Claw() )
+        except:
+            pass
+
+        try:
+            self.subsystems.append( Bumper() )
+        except:
+            pass
+
+        try:
+            self.subsystems.append( Limelight() )
+        except:
+            pass
 
     def robotPeriodic(self): pass
 

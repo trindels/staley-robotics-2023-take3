@@ -1,4 +1,10 @@
 from ntcore import NetworkTableInstance, NetworkTable, NetworkTableEntry, Event, EventFlags
+#from .arm import *
+#from .bumper import *
+#from .claw import *
+#from .limelight import *
+#from .pneumatics import *
+#from .swervedrive import *
 
 class Subsystems:
     ntInst:NetworkTableInstance = None

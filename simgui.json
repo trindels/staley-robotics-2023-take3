@@ -22,25 +22,20 @@
     }
   },
   "NetworkTables": {
+    "Persistent Values": {
+      "open": false
+    },
+    "Retained Values": {
+      "open": false
+    },
     "persistent": {
       "InitConfig": {
-        "SwerveDrive4": {
-          "open": true
-        }
-      },
-      "Variables": {
         "SwerveDrive4": {
           "open": true
         }
       }
     },
     "transitory": {
-      "SmartDashboard": {
-        "Field": {
-          "open": true
-        },
-        "open": true
-      },
       "Variables": {
         "SwerveDrive4": {
           "open": true,
