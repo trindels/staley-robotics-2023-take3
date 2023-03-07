@@ -32,6 +32,22 @@
     }
   },
   {
+    "name": "/InitConfig/SwerveModule/FrontLeft/driveMotorReversed",
+    "type": "boolean",
+    "value": true,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/InitConfig/SwerveModule/FrontLeft/driveSensorReversed",
+    "type": "boolean",
+    "value": false,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
     "name": "/InitConfig/SwerveModule/FrontLeft/angleMotorId",
     "type": "double",
     "value": 8.0,
@@ -43,6 +59,14 @@
     "name": "/InitConfig/SwerveModule/FrontLeft/angleMotorCanbus",
     "type": "string",
     "value": "canivore1",
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/InitConfig/SwerveModule/FrontLeft/angleMotorReversed",
+    "type": "boolean",
+    "value": false,
     "properties": {
       "persistent": true
     }
@@ -66,7 +90,15 @@
   {
     "name": "/InitConfig/SwerveModule/FrontLeft/angleSensorOffset",
     "type": "double",
-    "value": 137.4,
+    "value": 42.451,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/InitConfig/SwerveModule/FrontLeft/angleSensorReversed",
+    "type": "boolean",
+    "value": false,
     "properties": {
       "persistent": true
     }
@@ -104,6 +136,22 @@
     }
   },
   {
+    "name": "/InitConfig/SwerveModule/FrontRight/driveMotorReversed",
+    "type": "boolean",
+    "value": true,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/InitConfig/SwerveModule/FrontRight/driveSensorReversed",
+    "type": "boolean",
+    "value": false,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
     "name": "/InitConfig/SwerveModule/FrontRight/angleMotorId",
     "type": "double",
     "value": 6.0,
@@ -115,6 +163,14 @@
     "name": "/InitConfig/SwerveModule/FrontRight/angleMotorCanbus",
     "type": "string",
     "value": "canivore1",
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/InitConfig/SwerveModule/FrontRight/angleMotorReversed",
+    "type": "boolean",
+    "value": false,
     "properties": {
       "persistent": true
     }
@@ -138,7 +194,15 @@
   {
     "name": "/InitConfig/SwerveModule/FrontRight/angleSensorOffset",
     "type": "double",
-    "value": 137.4,
+    "value": 215.684,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/InitConfig/SwerveModule/FrontRight/angleSensorReversed",
+    "type": "boolean",
+    "value": false,
     "properties": {
       "persistent": true
     }
@@ -176,6 +240,22 @@
     }
   },
   {
+    "name": "/InitConfig/SwerveModule/BackLeft/driveMotorReversed",
+    "type": "boolean",
+    "value": false,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/InitConfig/SwerveModule/BackLeft/driveSensorReversed",
+    "type": "boolean",
+    "value": false,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
     "name": "/InitConfig/SwerveModule/BackLeft/angleMotorId",
     "type": "double",
     "value": 4.0,
@@ -187,6 +267,14 @@
     "name": "/InitConfig/SwerveModule/BackLeft/angleMotorCanbus",
     "type": "string",
     "value": "canivore1",
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/InitConfig/SwerveModule/BackLeft/angleMotorReversed",
+    "type": "boolean",
+    "value": false,
     "properties": {
       "persistent": true
     }
@@ -208,9 +296,17 @@
     }
   },
   {
+    "name": "/InitConfig/SwerveModule/BackLeft/angleSensorReversed",
+    "type": "boolean",
+    "value": false,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
     "name": "/InitConfig/SwerveModule/BackLeft/angleSensorOffset",
     "type": "double",
-    "value": 137.4,
+    "value": 43.945,
     "properties": {
       "persistent": true
     }
@@ -248,6 +344,22 @@
     }
   },
   {
+    "name": "/InitConfig/SwerveModule/BackRight/driveMotorReversed",
+    "type": "boolean",
+    "value": false,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/InitConfig/SwerveModule/BackRight/driveSensorReversed",
+    "type": "boolean",
+    "value": false,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
     "name": "/InitConfig/SwerveModule/BackRight/angleMotorId",
     "type": "double",
     "value": 2.0,
@@ -259,6 +371,14 @@
     "name": "/InitConfig/SwerveModule/BackRight/angleMotorCanbus",
     "type": "string",
     "value": "canivore1",
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/InitConfig/SwerveModule/BackRight/angleMotorReversed",
+    "type": "boolean",
+    "value": false,
     "properties": {
       "persistent": true
     }
@@ -282,7 +402,15 @@
   {
     "name": "/InitConfig/SwerveModule/BackRight/angleSensorOffset",
     "type": "double",
-    "value": 137.4,
+    "value": 245.654,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/InitConfig/SwerveModule/BackRight/angleSensorReversed",
+    "type": "boolean",
+    "value": false,
     "properties": {
       "persistent": true
     }
@@ -299,6 +427,14 @@
     "name": "/InitConfig/SwerveModule/BackRight/modulePositionY",
     "type": "double",
     "value": -0.25,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Build/initOverride",
+    "type": "boolean",
+    "value": false,
     "properties": {
       "persistent": true
     }
@@ -322,7 +458,7 @@
   {
     "name": "/Variables/SwerveDrive4/fieldRelative",
     "type": "boolean",
-    "value": false,
+    "value": true,
     "properties": {
       "persistent": true
     }
@@ -728,7 +864,7 @@
     }
   },
   {
-    "name": "/InitConfig/.override",
+    "name": "/Build/variableOverride",
     "type": "boolean",
     "value": false,
     "properties": {
@@ -736,23 +872,15 @@
     }
   },
   {
-    "name": "/Variables/.override",
+    "name": "/Testing/SwerveDrive4",
     "type": "boolean",
-    "value": false,
+    "value": true,
     "properties": {
       "persistent": true
     }
   },
   {
-    "name": "/.Testing/SwerveDrive4",
-    "type": "boolean",
-    "value": false,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/.Testing/SwerveModule",
+    "name": "/Testing/SwerveModule",
     "type": "boolean",
     "value": false,
     "properties": {

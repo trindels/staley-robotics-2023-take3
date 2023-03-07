@@ -5,28 +5,32 @@ from ntcore import *
 class Build:
     def buildInitConfig(self):
         ntInst = NetworkTableInstance.getDefault()
-        tbl = ntInst.getTable("InitConfig")
-        override:bool = tbl.getBoolean(".override", False)
-        self.build(tbl, "build/config/", persist=True, override=override)
-        tbl.putBoolean(".override", False)
-        tbl.setPersistent(".override")
+        tbl = ntInst.getTable("Build")
+        override:bool = tbl.getBoolean("initOverride", False)
+        initTbl = ntInst.getTable("InitConfig")
+        self.build(initTbl, "build/config/", persist=True, override=override)
+        tbl.putBoolean("initOverride", False)
+        tbl.setPersistent("initOverride")
 
     def buildVariables(self):
         ntInst = NetworkTableInstance.getDefault()
-        tbl = ntInst.getTable("Variables")
-        override:bool = tbl.getBoolean(".override", False)
-        self.build(tbl, "build/variables/", persist=True, override=override)
-        tbl.putBoolean(".override", False)
-        tbl.setPersistent(".override")
+        tbl = ntInst.getTable("Build")
+        override:bool = tbl.getBoolean("variableOverride", False)
+        varTbl = ntInst.getTable("Variables")
+        self.build(varTbl, "build/variables/", persist=True, override=override)
+        tbl.putBoolean("variableOverride", False)
+        tbl.setPersistent("variableOverride")
 
     def build(self, ntTable, folderPath, persist=False, override=False):
-        files = os.listdir( folderPath )
+        myDir = os.path.dirname(__file__)
+        searchDir = os.path.join( myDir, folderPath )
+        files = os.listdir( searchDir )
         for file in files:
             # Only Load Json Files
             if not file.endswith(".json"):
                 continue
             # Loop Through Files
-            fullPath = os.path.join( os.getcwd(), folderPath, file )
+            fullPath = os.path.join( searchDir, file )
             with open(f"{fullPath}", 'r') as f:
                 content = json.load( f )
                 for top in content:

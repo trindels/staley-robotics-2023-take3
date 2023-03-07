@@ -2,7 +2,7 @@ import math
 from wpimath.geometry import Rotation2d
 
 def getTicksFromRotation( rotation:Rotation2d, ticksPerRotation:float ) -> int:
-    radians:float = rotation.radians() # type: ignore
+    radians:float = rotation.radians()
     ticks:int = int( radians * ticksPerRotation / ( 2 * math.pi ) )
     return ticks
 

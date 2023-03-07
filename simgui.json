@@ -1,4 +1,18 @@
 {
+  "HALProvider": {
+    "Other Devices": {
+      "CANCoder[16]": {
+        "header": {
+          "open": true
+        }
+      },
+      "Talon FX[6]/Integrated Sensor": {
+        "header": {
+          "open": true
+        }
+      }
+    }
+  },
   "NTProvider": {
     "types": {
       "/FMSInfo": "FMSInfo",
@@ -27,6 +41,9 @@
     },
     "persistent": {
       ".Testing": {
+        "open": true
+      },
+      "Build": {
         "open": true
       },
       "InitConfig": {

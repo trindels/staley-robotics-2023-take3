@@ -13,6 +13,11 @@ class PhysicsEngine:
         self.drivetrain:SwerveDrive4 = robot.subsystems[0]
         self.gyroSim:BasePigeonSimCollection = self.drivetrain.gyro.getSimCollection()
 
+        self.moduleFR_AM:TalonFXSimCollection = self.drivetrain.moduleFR.angleMotor.getSimCollection()
+        self.moduleFR_AM.setIntegratedSensorRawPosition(1991)
+        self.moduleFR_AS:CANCoderSimCollection = self.drivetrain.moduleFR.angleSensor.getSimCollection()
+        self.moduleFR_AS.setRawPosition(1991)
+
     def update_sim(self, now, tm_diff):
         if self.drivetrain is None:
             return
@@ -26,3 +31,6 @@ class PhysicsEngine:
         # Gyro Simulation
         newRot:Rotation2d = newPose.rotation()
         self.gyroSim.setRawHeading( newRot.degrees() )
+
+        #self.moduleFR_AM.addIntegratedSensorPosition( self.drivetrain.moduleFR.adjTicks )
+        #self.moduleFR_AS.addPosition( self.drivetrain.moduleFR.adjTicks )

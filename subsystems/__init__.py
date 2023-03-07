@@ -28,7 +28,7 @@ class Subsystems:
 
 
         # Set Testing Variable
-        ntTest = self.ntInst.getTable(f".Testing")
+        ntTest = self.ntInst.getTable(f"Testing")
         eType = ntTest.getEntry(f"{cName}").getType()
         if eType == NetworkTableType.kUnassigned:
             ntTest.putBoolean(f"{cName}", False)
