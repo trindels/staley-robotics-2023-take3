@@ -30,7 +30,8 @@ class Robot(TimedRobot):
         # Add SwerveDrive to Subsystems
         try:
             self.subsystems.append( SwerveDrive4() )
-        except:
+        except Exception as e:
+            print( e )
             pass
 
         # Add RobotCompressor to Subsystems

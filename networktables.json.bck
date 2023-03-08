@@ -1,5 +1,69 @@
 [
   {
+    "name": "/InitConfig/SwerveModule/FrontRight/angleSensorOffset",
+    "type": "double",
+    "value": 215.684,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Variables/SwerveModule/angleMotors/pidFf/kP",
+    "type": "double",
+    "value": 0.05,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Build/initOverride",
+    "type": "boolean",
+    "value": false,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Build/variableOverride",
+    "type": "boolean",
+    "value": false,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Testing/SwerveDrive4",
+    "type": "boolean",
+    "value": false,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/InitConfig/SwerveModule/FrontRight/angleMotorReversed",
+    "type": "boolean",
+    "value": true,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/InitConfig/SwerveModule/FrontRight/angleMotorPhase",
+    "type": "boolean",
+    "value": true,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/InitConfig/SwerveModule/FrontRight/angleSensorReversed",
+    "type": "boolean",
+    "value": false,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
     "name": "/InitConfig/SwerveDrive4/gyroId",
     "type": "double",
     "value": 9.0,
@@ -40,7 +104,7 @@
     }
   },
   {
-    "name": "/InitConfig/SwerveModule/FrontLeft/driveSensorReversed",
+    "name": "/InitConfig/SwerveModule/FrontLeft/driveMotorPhase",
     "type": "boolean",
     "value": false,
     "properties": {
@@ -66,7 +130,15 @@
   {
     "name": "/InitConfig/SwerveModule/FrontLeft/angleMotorReversed",
     "type": "boolean",
-    "value": false,
+    "value": true,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/InitConfig/SwerveModule/FrontLeft/angleMotorPhase",
+    "type": "boolean",
+    "value": true,
     "properties": {
       "persistent": true
     }
@@ -144,7 +216,7 @@
     }
   },
   {
-    "name": "/InitConfig/SwerveModule/FrontRight/driveSensorReversed",
+    "name": "/InitConfig/SwerveModule/FrontRight/driveMotorPhase",
     "type": "boolean",
     "value": false,
     "properties": {
@@ -163,62 +235,6 @@
     "name": "/InitConfig/SwerveModule/FrontRight/angleMotorCanbus",
     "type": "string",
     "value": "canivore1",
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/InitConfig/SwerveModule/FrontRight/angleMotorReversed",
-    "type": "boolean",
-    "value": false,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/InitConfig/SwerveModule/FrontRight/angleSensorId",
-    "type": "double",
-    "value": 16.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/InitConfig/SwerveModule/FrontRight/angleSensorCanbus",
-    "type": "string",
-    "value": "canivore1",
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/InitConfig/SwerveModule/FrontRight/angleSensorOffset",
-    "type": "double",
-    "value": 215.684,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/InitConfig/SwerveModule/FrontRight/angleSensorReversed",
-    "type": "boolean",
-    "value": false,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/InitConfig/SwerveModule/FrontRight/modulePositionX",
-    "type": "double",
-    "value": 0.25,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/InitConfig/SwerveModule/FrontRight/modulePositionY",
-    "type": "double",
-    "value": -0.25,
     "properties": {
       "persistent": true
     }
@@ -248,7 +264,7 @@
     }
   },
   {
-    "name": "/InitConfig/SwerveModule/BackLeft/driveSensorReversed",
+    "name": "/InitConfig/SwerveModule/BackLeft/driveMotorPhase",
     "type": "boolean",
     "value": false,
     "properties": {
@@ -274,7 +290,15 @@
   {
     "name": "/InitConfig/SwerveModule/BackLeft/angleMotorReversed",
     "type": "boolean",
-    "value": false,
+    "value": true,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/InitConfig/SwerveModule/BackLeft/angleMotorPhase",
+    "type": "boolean",
+    "value": true,
     "properties": {
       "persistent": true
     }
@@ -352,7 +376,7 @@
     }
   },
   {
-    "name": "/InitConfig/SwerveModule/BackRight/driveSensorReversed",
+    "name": "/InitConfig/SwerveModule/BackRight/driveMotorPhase",
     "type": "boolean",
     "value": false,
     "properties": {
@@ -378,7 +402,15 @@
   {
     "name": "/InitConfig/SwerveModule/BackRight/angleMotorReversed",
     "type": "boolean",
-    "value": false,
+    "value": true,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/InitConfig/SwerveModule/BackRight/angleMotorPhase",
+    "type": "boolean",
+    "value": true,
     "properties": {
       "persistent": true
     }
@@ -432,14 +464,6 @@
     }
   },
   {
-    "name": "/Build/initOverride",
-    "type": "boolean",
-    "value": false,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
     "name": "/Variables/Controllers/deadbandDefault",
     "type": "double",
     "value": 0.1,
@@ -465,16 +489,16 @@
   },
   {
     "name": "/Variables/SwerveDrive4/speed/angular/maxVelocity",
-    "type": "string",
-    "value": "2 * math.pi",
+    "type": "double",
+    "value": 6.28318531,
     "properties": {
       "persistent": true
     }
   },
   {
     "name": "/Variables/SwerveDrive4/speed/angular/maxAcceleration",
-    "type": "string",
-    "value": "math.pi",
+    "type": "double",
+    "value": 3.14159265,
     "properties": {
       "persistent": true
     }
@@ -792,9 +816,49 @@
     }
   },
   {
-    "name": "/Variables/SwerveModule/angleMotors/pidFf/kP",
+    "name": "/Variables/SwerveModule/angleSensors/ticks",
     "type": "double",
-    "value": 0.05,
+    "value": 4096.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Testing/SwerveModule",
+    "type": "boolean",
+    "value": false,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/InitConfig/SwerveModule/FrontRight/angleSensorId",
+    "type": "double",
+    "value": 16.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/InitConfig/SwerveModule/FrontRight/angleSensorCanbus",
+    "type": "string",
+    "value": "canivore1",
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/InitConfig/SwerveModule/FrontRight/modulePositionX",
+    "type": "double",
+    "value": 0.25,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/InitConfig/SwerveModule/FrontRight/modulePositionY",
+    "type": "double",
+    "value": -0.25,
     "properties": {
       "persistent": true
     }
@@ -851,38 +915,6 @@
     "name": "/Variables/SwerveModule/angleMotors/pidFf/tolerance",
     "type": "double",
     "value": 0.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Variables/SwerveModule/angleSensors/ticks",
-    "type": "double",
-    "value": 4096.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Build/variableOverride",
-    "type": "boolean",
-    "value": false,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Testing/SwerveDrive4",
-    "type": "boolean",
-    "value": false,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Testing/SwerveModule",
-    "type": "boolean",
-    "value": false,
     "properties": {
       "persistent": true
     }

@@ -8,7 +8,7 @@ class Build:
         tbl = ntInst.getTable("Build")
         override:bool = tbl.getBoolean("initOverride", False)
         initTbl = ntInst.getTable("InitConfig")
-        self.build(initTbl, "build/config/", persist=True, override=override)
+        self.build(initTbl, "config/", persist=True, override=override)
         tbl.putBoolean("initOverride", False)
         tbl.setPersistent("initOverride")
 
@@ -17,7 +17,7 @@ class Build:
         tbl = ntInst.getTable("Build")
         override:bool = tbl.getBoolean("variableOverride", False)
         varTbl = ntInst.getTable("Variables")
-        self.build(varTbl, "build/variables/", persist=True, override=override)
+        self.build(varTbl, "variables/", persist=True, override=override)
         tbl.putBoolean("variableOverride", False)
         tbl.setPersistent("variableOverride")
 

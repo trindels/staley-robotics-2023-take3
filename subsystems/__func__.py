@@ -32,3 +32,15 @@ def getDistanceMetersToTicks( meters:float, ticksPerRotation:float, radius:float
     rotations:float = meters / ( 2 * math.pi * radius )
     ticks:float = rotations * ticksPerRotation
     return ticks
+
+def getContinuousInputMeasurement( currentSetpoint:float, targetSetpoint:float, measurement:float ) -> float:
+    targetSetpoint = math.remainder(targetSetpoint, measurement)
+    remainder:float = currentSetpoint % measurement
+    adjustedAngleSetpoint:float = targetSetpoint + (currentSetpoint - remainder)
+
+    if (adjustedAngleSetpoint - currentSetpoint > (measurement/2)):
+        adjustedAngleSetpoint -= measurement
+    elif (adjustedAngleSetpoint - currentSetpoint < (-measurement/2)):
+        adjustedAngleSetpoint += measurement
+
+    return adjustedAngleSetpoint

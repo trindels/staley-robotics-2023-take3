@@ -50,6 +50,9 @@
         "SwerveDrive4": {
           "open": true
         }
+      },
+      "Testing": {
+        "open": true
       }
     },
     "transitory": {

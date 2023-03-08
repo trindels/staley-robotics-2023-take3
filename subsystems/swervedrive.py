@@ -54,7 +54,7 @@ class SwerveDrive4(Subsystems):
         self.speed_linear_maxvelocity = self.ntVars.getNumber("speed/linear/maxVelocity", 1.0)
         self.speed_linear_maxvelocityx = self.ntVars.getNumber("speed/linear/maxVelocityX", self.speed_linear_maxvelocity)
         self.speed_linear_maxvelocityy = self.ntVars.getNumber("speed/linear/maxVelocityY", self.speed_linear_maxvelocity)
-        self.speed_angular_maxvelocity = self.ntVars.getNumber("speed/angular/maxVelocity", eval(self.ntVars.getString("speed/angular/maxVelocity",(2 * math.pi))))
+        self.speed_angular_maxvelocity = self.ntVars.getNumber("speed/angular/maxVelocity", self.ntVars.getString("speed/angular/maxVelocity",(2 * math.pi)))
 
         # Chassis X Direction PID
         #self.pidX_kp = self.ntVars.getNumber("ChassisControl/X/kP",1.0)
@@ -250,8 +250,8 @@ class SwerveModule(Subsystems):
         driveMotorReversed:bool = self.ntCfgs.getBoolean("driveMotorReversed",False)
         driveMotorPhase:bool = self.ntCfgs.getBoolean("driveMotorPhase",False)
 
-        angleMotorReversed:bool = self.ntCfgs.getBoolean("angleMotorReversed",False)
-        angleMotorPhase:bool = self.ntCfgs.getBoolean("angleMotorPhase",False)
+        angleMotorReversed:bool = self.ntCfgs.getBoolean("angleMotorReversed",True)
+        angleMotorPhase:bool = self.ntCfgs.getBoolean("angleMotorPhase",True)
 
         angleSensorReversed:bool = self.ntCfgs.getBoolean("angleSensorReversed",False)
         angleSensorOffset:float = self.ntCfgs.getNumber("angleSensorOffset",0.0)
@@ -321,7 +321,16 @@ class SwerveModule(Subsystems):
     
     def initPidControllers(self):
         #self.pidDrive = PIDController()
-        #self.pidAngle = PIDController()
+        self.pidAngle = ProfiledPIDControllerRadians(
+            self.anglemotors_pidff_kp,
+            self.anglemotors_pidff_ki,
+            self.anglemotors_pidff_kd,
+            TrapezoidProfileRadians.Constraints(
+                self.anglemotors_pidff_kv,
+                self.anglemotors_pidff_ka
+            )
+        )
+        self.pidAngle.enableContinuousInput(-math.pi,math.pi)
         self.updatePidControllers()
 
     def updatePidControllers(self):
@@ -344,17 +353,24 @@ class SwerveModule(Subsystems):
         if self.anglemotors_integratedpid:
             self.angleMotor.selectProfileSlot(1,0)
         else:
+            self.pidAngle.setP(self.anglemotors_pidff_kp)
+            self.pidAngle.setI(self.anglemotors_pidff_ki)
+            self.pidAngle.setD(self.anglemotors_pidff_kd)
+            self.pidAngle.setConstraints(
+                TrapezoidProfileRadians(
+                    self.anglemotors_pidff_kv,
+                    self.anglemotors_pidff_ka
+                )
+            )
             self.angleMotor.selectProfileSlot(0,0)
 
     def setDesiredState(self, desiredState:SwerveModuleState):
-        # Optimize Desired State (Rotate Wheels the least amount)
-        aPosition = self.angleMotor.getSelectedSensorPosition(0)
-        currentRotation = getRotationFromTicks( aPosition, self.anglesensors_ticks )
-
         # Optimize the reference state to avoid spinning further than 90 degrees and reversing drive motor power
+        angleCurrentPosition = self.angleMotor.getSelectedSensorPosition(0)
+        angleCurrentRotation = getRotationFromTicks( angleCurrentPosition, self.anglesensors_ticks )
         optimalState:SwerveModuleState = SwerveModuleState.optimize(
             desiredState,
-            currentRotation  
+            angleCurrentRotation  
         )
 
         # Drive Motor (open loop??? or closed loop PID)
@@ -363,49 +379,31 @@ class SwerveModule(Subsystems):
             osTp100ms = getVelocityMpsToTp100ms( optimalState.speed, self.drivemotors_ticks, self.wheelRadius )
 
             # Set Closed Loop Velocity
-            self.driveMotor.set(
-                ControlMode.Velocity,
-                0 #osTp100ms
-            )
+            #self.driveMotor.set(
+            #    ControlMode.Velocity,
+            #    0 #osTp100ms
+            #)
         else:
             pass ### Software Drive PID
 
         # Angle Motor (closed loop PID)
         if self.anglemotors_integratedpid:
-            # Degrees to Move
-            newDegrees = optimalState.angle.degrees()
-            currentDegrees = currentRotation.degrees() % 360
-            degToRotate = newDegrees - currentDegrees
+            # Get Target Position
+            osTicks = getTicksFromRotation(optimalState.angle, self.anglesensors_ticks) # Get Optomized Target as Ticks
+            osTicks = getContinuousInputMeasurement(angleCurrentPosition, osTicks, self.anglesensors_ticks) # Correction for [-180,180)
 
-            # Detect [-180,180) crossover
-            if degToRotate > 90: degToRotate -= 360
-            elif degToRotate < -90: degToRotate += 360
-
-            # Ticks To Rotate
-            adjTicks = getTicksFromRotation( Rotation2d.fromDegrees(degToRotate), self.anglesensors_ticks)
-
-            # Print Output... TESTING PURPOSES... REMOVE AFTER TESTING
-            try:
-                if ( adjTicks != self.lastAdjTicks ):
-                    print( "New Degrees:", newDegrees)
-                    print( "Current Degrees:", aPosition, currentRotation.degrees() )
-                    print( "Degree To Rotate:", degToRotate)
-                    print( "Final Position:", (aPosition + adjTicks))
-                    self.lastAdjTicks = adjTicks
-            except:
-                print( "New Degrees:", newDegrees)
-                print( "Current Degrees:", aPosition, currentRotation.degrees() )
-                print( "Degree To Rotate:", degToRotate)
-                print( "Final Position:", (aPosition + adjTicks))
-                self.lastAdjTicks = adjTicks
-           
             # Set Closed Loop
             self.angleMotor.set(
                 ControlMode.Position,
-                (aPosition + adjTicks) #osTicks
+                osTicks
             )
         else:
-            pass ### Software Angle PID
+            ### Software Angle PID
+            angleOutput = self.pidAngle.calculate(
+                angleCurrentRotation.radians(),
+                optimalState.angle.radians()
+            )
+            self.angleMotor.setVoltage( angleOutput )
 
     def getModulePosition(self) -> Translation2d:
         return self.modulePosition

@@ -3,8 +3,8 @@
         "fieldRelative": true,
         "speed": {
             "angular": {
-                "maxVelocity": "2 * math.pi",
-                "maxAcceleration": "math.pi"
+                "maxVelocity": 6.28318531,
+                "maxAcceleration": 3.14159265
             },
             "linear": {
                 "maxVelocity": 2.0,
