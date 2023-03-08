@@ -1,13 +1,13 @@
 {
     "SwerveDrive4": {
-        "gyroId": 9,
+        "gyroId": 61,
         "gyroCanbus": "rio"
     },
     "SwerveModule": {
         "FrontLeft": {
             "driveMotorId": 7,
             "driveMotorCanbus": "canivore1",
-            "driveMotorReversed": true,
+            "driveMotorReversed": false,
             "driveMotorPhase": false,
             "angleMotorId": 8,
             "angleMotorCanbus": "canivore1",
@@ -23,7 +23,7 @@
         "FrontRight": {
             "driveMotorId": 5,
             "driveMotorCanbus": "canivore1",
-            "driveMotorReversed": true,
+            "driveMotorReversed": false,
             "driveMotorPhase": false,
             "angleMotorId": 6,
             "angleMotorCanbus": "canivore1",

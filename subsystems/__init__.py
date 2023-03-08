@@ -37,19 +37,19 @@ class Subsystems:
         # Initialize Subsystem
         self.initSubsystem()
         self.initVariables()
-        self.startNtListener()
+        self.initNtListener()
 
     # Network Tables Listener
-    def startNtListener(self):
+    def initNtListener(self):
         cName = self.__class__.__name__
         self.ntInst.addListener(
             [ f"/Variables/{cName}" ],
             EventFlags.kValueAll,
-            self.updateNtVariables
+            self.updateVariables
         )
 
     # Update 
-    def updateNtVariables(self, event:Event):
+    def updateVariables(self, event:Event):
         cName = self.__class__.__name__
         # Get Variable Name and New Value
         varName = event.data.topic.getName().removeprefix(f"/Variables/{cName}/").replace("/", "_").lower()

@@ -3,13 +3,13 @@
         "fieldRelative": true,
         "speed": {
             "angular": {
-                "maxVelocity": 6.28318531,
-                "maxAcceleration": 3.14159265
+                "maxVelocity": 25.13274122,
+                "maxAcceleration": 12.56637061
             },
             "linear": {
-                "maxVelocity": 2.0,
-                "maxVelocityX": 2.0,
-                "maxVelocityY": 2.0
+                "maxVelocity": 8.0,
+                "maxVelocityX": 8.0,
+                "maxVelocityY": 8.0
             }
         },
         "chassisControl": {
@@ -51,22 +51,23 @@
             "gearRatio": 1,
             "integratedPid": true,
             "pidFf": {
-                "kP": 1.0,
+                "kP": 0.15,
                 "kI": 0.0,
                 "kD": 0.0,
-                "kF": 0.0,
+                "kF": 0.065,
                 "kS": 0.0,
                 "kV": 0.0,
                 "kA": 0.0,
                 "tolerance": 0.0
-            }
+            },
+            "slewRateSteps": 5
         },
         "angleMotors": {
             "ticks": 2048,
             "gearRatio": 10,
             "integratedPid": true,
             "pidFf": {
-                "kP": 0.05,
+                "kP": 0.5,
                 "kI": 0.0,
                 "kD": 0.0,
                 "kF": 0.0,

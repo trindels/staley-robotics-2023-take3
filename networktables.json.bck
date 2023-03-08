@@ -18,7 +18,7 @@
   {
     "name": "/Build/initOverride",
     "type": "boolean",
-    "value": false,
+    "value": true,
     "properties": {
       "persistent": true
     }
@@ -26,7 +26,7 @@
   {
     "name": "/Build/variableOverride",
     "type": "boolean",
-    "value": false,
+    "value": true,
     "properties": {
       "persistent": true
     }
@@ -34,7 +34,7 @@
   {
     "name": "/Testing/SwerveDrive4",
     "type": "boolean",
-    "value": false,
+    "value": true,
     "properties": {
       "persistent": true
     }
@@ -506,7 +506,7 @@
   {
     "name": "/Variables/SwerveDrive4/speed/linear/maxVelocity",
     "type": "double",
-    "value": 2.0,
+    "value": 8.0,
     "properties": {
       "persistent": true
     }
@@ -514,7 +514,7 @@
   {
     "name": "/Variables/SwerveDrive4/speed/linear/maxVelocityX",
     "type": "double",
-    "value": 2.0,
+    "value": 8.0,
     "properties": {
       "persistent": true
     }
@@ -522,7 +522,7 @@
   {
     "name": "/Variables/SwerveDrive4/speed/linear/maxVelocityY",
     "type": "double",
-    "value": 2.0,
+    "value": 8.0,
     "properties": {
       "persistent": true
     }

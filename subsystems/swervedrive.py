@@ -4,10 +4,11 @@ from ctre import WPI_TalonFX, ControlMode, FeedbackDevice, RemoteFeedbackDevice,
 from ctre.sensors import *  #WPI_Pigeon2, WPI_CANCoder, SensorInitializationStrategy, AbsoluteSensorRange
 from wpilib import SmartDashboard, XboxController
 from wpimath import applyDeadband
-from wpimath.controller import PIDController, ProfiledPIDController, ProfiledPIDControllerRadians, HolonomicDriveController
-from wpimath.trajectory import TrapezoidProfile, TrapezoidProfileRadians
-from wpimath.kinematics import SwerveDrive4Kinematics, SwerveDrive4Odometry, SwerveModulePosition, SwerveModuleState, ChassisSpeeds
+from wpimath.controller import PIDController, ProfiledPIDController, ProfiledPIDControllerRadians, HolonomicDriveController, SimpleMotorFeedforwardMeters
+from wpimath.filter import SlewRateLimiter
 from wpimath.geometry import Translation2d, Rotation2d, Pose2d
+from wpimath.kinematics import SwerveDrive4Kinematics, SwerveDrive4Odometry, SwerveModulePosition, SwerveModuleState, ChassisSpeeds
+from wpimath.trajectory import TrapezoidProfile, TrapezoidProfileRadians
 
 class SwerveDrive4(Subsystems):
     cSpeeds:ChassisSpeeds = ChassisSpeeds()
@@ -54,7 +55,8 @@ class SwerveDrive4(Subsystems):
         self.speed_linear_maxvelocity = self.ntVars.getNumber("speed/linear/maxVelocity", 1.0)
         self.speed_linear_maxvelocityx = self.ntVars.getNumber("speed/linear/maxVelocityX", self.speed_linear_maxvelocity)
         self.speed_linear_maxvelocityy = self.ntVars.getNumber("speed/linear/maxVelocityY", self.speed_linear_maxvelocity)
-        self.speed_angular_maxvelocity = self.ntVars.getNumber("speed/angular/maxVelocity", self.ntVars.getString("speed/angular/maxVelocity",(2 * math.pi)))
+        self.speed_angular_maxvelocity = self.ntVars.getNumber("speed/angular/maxVelocity", (8 * math.pi))
+        self.speed_angular_maxacceleration = self.ntVars.getNumber("speed/angular/maxAcceleration", (4 * math.pi))
 
         # Chassis X Direction PID
         #self.pidX_kp = self.ntVars.getNumber("ChassisControl/X/kP",1.0)
@@ -138,19 +140,19 @@ class SwerveDrive4(Subsystems):
         lx, ly, lt, rx, ry, rt = self.getInputs()
         
         # Drive
-        if rx != 0 or ry != 0:
+        if rx != 0.0 or ry != 0.0:
             self.driveWithRotate( lx, ly, rx, ry )
         else:
             omega = (lt - rt)
             self.drive( lx, ly, omega )
 
     def getInputs(self) -> tuple[float,float,float,float,float,float]:
-        lx = applyDeadband(-self.op1.getLeftY(), 0.02, 1.0)
-        ly = applyDeadband(-self.op1.getLeftX(), 0.02, 1.0)
-        lt = applyDeadband(self.op1.getLeftTriggerAxis(), 0.02, 1.0)
-        rx = applyDeadband(-self.op1.getRightY(), 0.02, 1.0)
-        ry = applyDeadband(-self.op1.getRightX(), 0.02, 1.0)
-        rt = applyDeadband(self.op1.getRightTriggerAxis(), 0.02, 1.0)
+        lx = applyDeadband(self.op1.getLeftY(), 0.1, 1.0)
+        ly = applyDeadband(self.op1.getLeftX(), 0.1, 1.0)
+        lt = applyDeadband(self.op1.getLeftTriggerAxis(), 0.1, 1.0)
+        rx = applyDeadband(self.op1.getRightY(), 0.1, 1.0)
+        ry = applyDeadband(self.op1.getRightX(), 0.1, 1.0)
+        rt = applyDeadband(self.op1.getRightTriggerAxis(), 0.1, 1.0)
         return lx, ly, lt, rx, ry, rt
 
     def driveToPose(self, pose:Pose2d, velocity:float=None):
@@ -211,11 +213,11 @@ class SwerveDrive4(Subsystems):
         rotationCenter = Translation2d(0,0)
         modStates = self.kinematics.toSwerveModuleStates(speeds, rotationCenter)
         modStates = SwerveDrive4Kinematics.desaturateWheelSpeeds( modStates, self.speed_linear_maxvelocity )
-        
-        #self.moduleFL.setDesiredState(modStates[0])
+    
+        self.moduleFL.setDesiredState(modStates[0])
         self.moduleFR.setDesiredState(modStates[1])
-        #self.moduleBL.setDesiredState(modStates[2])
-        #self.moduleBR.setDesiredState(modStates[3])
+        self.moduleBL.setDesiredState(modStates[2])
+        self.moduleBR.setDesiredState(modStates[3])
         
         self.updateOdometry()
 
@@ -228,7 +230,7 @@ class SwerveDrive4(Subsystems):
             self.moduleBL.getPosition(),
             self.moduleBR.getPosition()
         )
-        #SmartDashboard.putNumberArray("Field/Swerve",[pose.X(), pose.Y(), pose.rotation().degrees()])
+        SmartDashboard.putNumberArray("Field/Swerve",[pose.X(), pose.Y(), pose.rotation().degrees()])
         #if old.x != pose.x or old.y != pose.y or old.rotation().degrees() != pose.rotation().degrees():
         #    pass
 
@@ -288,6 +290,9 @@ class SwerveModule(Subsystems):
         self.drivemotors_integratedpid:bool = self.ntVars.getBoolean("driveMotors/integratedPid",True)
         self.anglemotors_integratedpid:bool = self.ntVars.getBoolean("angleMotors/integratedPid",True)
 
+        # Integrated PID
+        self.drivemotors_slewratesteps:int = self.ntVars.getNumber("driveMotors/slewRateSteps",5)
+
         # Physical Mechanics
         self.wheelRadius:float = self.ntVars.getNumber("wheelRadius",0.05)
         self.drivemotors_ticks:float = self.ntVars.getNumber("driveMotors/ticks",2048.0)
@@ -295,17 +300,17 @@ class SwerveModule(Subsystems):
         self.anglesensors_ticks:float = self.ntVars.getNumber("angleSensors/ticks",4096.0)
 
         # Drive PID Mechanics
-        self.drivemotors_pidff_kp:float = self.ntVars.getNumber("driveMotors/pidFf/kP",1.0)
+        self.drivemotors_pidff_kp:float = self.ntVars.getNumber("driveMotors/pidFf/kP",0.15)
         self.drivemotors_pidff_ki:float = self.ntVars.getNumber("driveMotors/pidFf/kI",0.0)
         self.drivemotors_pidff_kd:float = self.ntVars.getNumber("driveMotors/pidFf/kD",0.0)
-        self.drivemotors_pidff_kf:float = self.ntVars.getNumber("driveMotors/pidFf/kF",0.0)  #recommend start here
+        self.drivemotors_pidff_kf:float = self.ntVars.getNumber("driveMotors/pidFf/kF",0.065)  #recommend start here
         self.drivemotors_pidff_ks:float = self.ntVars.getNumber("driveMotors/pidFf/kS",0.0)
         self.drivemotors_pidff_kv:float = self.ntVars.getNumber("driveMotors/pidFf/kV",0.0)
         self.drivemotors_pidff_ka:float = self.ntVars.getNumber("driveMotors/pidFf/kA",0.0)
         self.drivemotors_pidff_tolerance:float = self.ntVars.getNumber("driveMotors/pidFf/tolerance",0.0)
 
         # Rotate PID Mechanics
-        self.anglemotors_pidff_kp:float = self.ntVars.getNumber("angleMotors/pidFf/kP",0.05)  #recommended: (throttle*1023/4096) ~ 0.125
+        self.anglemotors_pidff_kp:float = self.ntVars.getNumber("angleMotors/pidFf/kP",0.5)   #recommended: (throttle*1023/4096) ~ 0.125
         self.anglemotors_pidff_ki:float = self.ntVars.getNumber("angleMotors/pidFf/kI",0.0)   #recommended: 1% of kP
         self.anglemotors_pidff_kd:float = self.ntVars.getNumber("angleMotors/pidFf/kD",0.0)   #recommended: 10-100x of kP
         self.anglemotors_pidff_kf:float = self.ntVars.getNumber("angleMotors/pidFf/kF",0.0)
@@ -315,12 +320,26 @@ class SwerveModule(Subsystems):
         self.anglemotors_pidff_tolerance:float = self.ntVars.getNumber("angleMotors/pidFf/tolerance",0.0)
 
         self.initPidControllers()
+        self.initSlewRateLimiter()
 
     def updateVariableSubsystems(self):
         self.updatePidControllers()
-    
+        self.initSlewRateLimiter()  ### Should we consider only updating this during reboot?
+
+    def initSlewRateLimiter(self):
+        self.driveSRL = SlewRateLimiter( self.drivemotors_slewratesteps )
+
     def initPidControllers(self):
-        #self.pidDrive = PIDController()
+        self.pidDrive = PIDController(
+            self.drivemotors_pidff_kp,
+            self.drivemotors_pidff_ki,
+            self.drivemotors_pidff_kd
+        )
+        self.ffDrive = SimpleMotorFeedforwardMeters(
+            self.drivemotors_pidff_kf,
+            self.drivemotors_pidff_kv,
+            self.drivemotors_pidff_ks
+        )
         self.pidAngle = ProfiledPIDControllerRadians(
             self.anglemotors_pidff_kp,
             self.anglemotors_pidff_ki,
@@ -377,21 +396,33 @@ class SwerveModule(Subsystems):
         if self.drivemotors_integratedpid:
             # Get Velocity in Ticks per 100 ms
             osTp100ms = getVelocityMpsToTp100ms( optimalState.speed, self.drivemotors_ticks, self.wheelRadius )
+            ####
+            #### Do we want to add a Slew Rate Limiter Here?
+            #### osTp100ms = self.driveSRL.calculate( osTp100ms )
+            ####
 
             # Set Closed Loop Velocity
-            #self.driveMotor.set(
-            #    ControlMode.Velocity,
-            #    0 #osTp100ms
-            #)
+            self.driveMotor.set(
+                ControlMode.Velocity,
+                osTp100ms
+            )
         else:
-            pass ### Software Drive PID
+            ### Software Drive PID
+            driveOutput = self.pidDrive.calculate(
+                angleCurrentRotation.radians(),
+                optimalState.angle.radians()
+            )
+            driveFFwd = self.ffDrive.calculate(
+                self.pidDrive.getSetpoint().velocity
+            )
+            self.driveMotor.setVoltage( driveOutput + driveFFwd )
 
         # Angle Motor (closed loop PID)
         if self.anglemotors_integratedpid:
             # Get Target Position
             osTicks = getTicksFromRotation(optimalState.angle, self.anglesensors_ticks) # Get Optomized Target as Ticks
             osTicks = getContinuousInputMeasurement(angleCurrentPosition, osTicks, self.anglesensors_ticks) # Correction for [-180,180)
-
+            
             # Set Closed Loop
             self.angleMotor.set(
                 ControlMode.Position,
