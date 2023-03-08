@@ -1,11 +1,6 @@
 {
   "HALProvider": {
     "Other Devices": {
-      "CANCoder[16]": {
-        "header": {
-          "open": true
-        }
-      },
       "Talon FX[6]/Integrated Sensor": {
         "header": {
           "open": true
@@ -16,6 +11,7 @@
   "NTProvider": {
     "types": {
       "/FMSInfo": "FMSInfo",
+      "/LiveWindow/Ungrouped/Pigeon 2[61]": "Gyro",
       "/LiveWindow/Ungrouped/Pigeon 2[9]": "Gyro",
       "/LiveWindow/Ungrouped/Talon FX [1]": "Motor Controller",
       "/LiveWindow/Ungrouped/Talon FX [2]": "Motor Controller",
